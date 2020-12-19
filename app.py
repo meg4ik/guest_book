@@ -21,14 +21,13 @@ def Comment_fu():
     from models import Comment
     from forms import CommentForm
     form = CommentForm(request.form)
-    print(request.form)
     if form.validate():
         commentsql = Comment(**form.data)
         db.session.add(commentsql)
         db.session.commit()
-        return "lol", 200
+        return "", 200
     else:
-        return "lol1", 400
+        return "", 400
 
         
 if __name__ == "__main__":

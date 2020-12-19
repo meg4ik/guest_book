@@ -6,11 +6,10 @@
     <title>Guest book</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="script.js"></script>
 </head>
 <body>
     <div class="container">
-        <form id="reqform" action="/comment" method="POST">
+        <form id="reqform">
             <div class="form-group">
             <label>Name</label>
             <input type="text" class="form-control"  name="name">
@@ -19,8 +18,71 @@
             <label>Message:</label>
             <textarea class="form-control" rows="3" name="massage"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" id = "button" class="btn btn-primary">Submit</button>
         </form>
+
+        <div class="modal fade" id="ModalDone">
+            <div class="modal-dialog">
+              <div class="modal-content">
+              
+                <div class="modal-header">
+                  <h4 class="modal-title">Adding is successful!</h4>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="ModalFail">
+            <div class="modal-dialog">
+              <div class="modal-content">
+              
+                <div class="modal-header">
+                  <h4 class="modal-title">Something went wrong!</h4>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
     </div>
+
+    <script type="application/javascript">
+        'use strict';
+    
+        (function (window, document, $) {
+        function sendRequest() {
+            var request = $.ajax({
+                url: 'http://127.0.0.1:5000/comment',
+                data : $("#reqform").serialize(),
+                dataType: 'json',
+                type: 'post'
+            });
+
+            request.done(function (data, textStatus, jqXHR) {
+                $("#ModalDone").modal()
+                console.log("done!")
+            });
+
+            request.fail(function (jqXHR, textStatus, errorThrown) {
+                $("#ModalFail").modal()
+                console.log("fail!")
+            });
+        }
+
+        $(document).ready(function() {
+            $('#button').click(function() {
+                sendRequest();
+            });
+        });
+    })(window, document, jQuery);
+    </script>
+
 </body>
 </html>
