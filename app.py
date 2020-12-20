@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, url_for
+from flask import Flask, request, render_template, url_for, jsonify
 from simple_settings import settings
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.datastructures import MultiDict
@@ -25,9 +25,11 @@ def Comment_fu():
         commentsql = Comment(**form.data)
         db.session.add(commentsql)
         db.session.commit()
-        return "", 200
+        return jsonify({'status': "success"}), 200
     else:
-        return "", 400
+        resp = jsonify({'status': 'fail'})
+        resp.status_code = 500
+        return resp
 
         
 if __name__ == "__main__":

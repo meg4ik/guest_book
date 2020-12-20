@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <form id="reqform">
+          <form id="reqform">
             <div class="form-group">
             <label>Name</label>
             <input type="text" class="form-control"  name="name">
@@ -19,43 +19,11 @@
             <textarea class="form-control" rows="3" name="massage"></textarea>
             </div>
             <button type="button" id = "button" class="btn btn-primary">Submit</button>
-        </form>
-
-        <div class="modal fade" id="ModalDone">
-            <div class="modal-dialog">
-              <div class="modal-content">
-              
-                <div class="modal-header">
-                  <h4 class="modal-title">Adding is successful!</h4>
-                </div>
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="ModalFail">
-            <div class="modal-dialog">
-              <div class="modal-content">
-              
-                <div class="modal-header">
-                  <h4 class="modal-title">Something went wrong!</h4>
-                </div>
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-        </div>
-
+          </form>
     </div>
 
     <script type="application/javascript">
         'use strict';
-    
         (function (window, document, $) {
         function sendRequest() {
             var request = $.ajax({
@@ -65,14 +33,12 @@
                 type: 'post'
             });
 
-            request.done(function (data, textStatus, jqXHR) {
-                $("#ModalDone").modal()
-                console.log("done!")
+            request.done(function(data) { 
+              alert("done!")
             });
 
-            request.fail(function (jqXHR, textStatus, errorThrown) {
-                $("#ModalFail").modal()
-                console.log("fail!")
+            request.fail(function() {
+              alert("fail!")
             });
         }
 
@@ -83,6 +49,5 @@
         });
     })(window, document, jQuery);
     </script>
-
 </body>
 </html>
